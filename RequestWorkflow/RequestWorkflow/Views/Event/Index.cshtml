@@ -1,0 +1,68 @@
+﻿@model IEnumerable<RequestWorkflow.Models.Event>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<style type="text/css">
+
+
+</style>
+
+<script type="text/javascript">
+    var i = 0;
+    function alerta() {
+        if (i==0){
+            alert("You have subscribed");
+            i=1;
+        } else if (i==1){
+            alert("You have unsubscribed");
+            i=0;
+        }
+        
+    }
+</script>
+
+<h2>Events</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 eventDiv box"><table>
+                <tr><td>
+                <b><font size="5"> @Html.DisplayFor(modelItem => item.Title)</font></b> <br />
+
+                <font size="3">Detaliile: @Html.DisplayFor(modelItem => item.Details)</font><br />
+
+                <font size="3">Locatia: @Html.DisplayFor(modelItem => item.Location)</font><br />
+
+                <font size="3">Data si ora: @Html.DisplayFor(modelItem => item.DateAndTime)</font><br /></td>
+                <td>
+                <img width="150" src="@Html.DisplayFor(modelItem => item.Image)" /></td></tr>
+                <tr><td>
+
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.ActionLink("Edit", "Update", new { id = item.Id })
+    @Html.ActionLink("Details", "Details", new { id = item.Id })
+    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+}
+    </td>
+    <td>
+@if (User.Identity.IsAuthenticated)
+{
+    <button onclick="alerta()" class="btn btn-danger btn-sm subscribeButton">Subscribe</button>
+}                
+
+</td></tr></table>
+            </div>            
+        }
+    </div>
+</div>
